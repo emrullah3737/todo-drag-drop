@@ -31,15 +31,21 @@ type Listener<T> = (items: T[]) => void;
 
 abstract class State<T> {
   protected listeners: Listener<T>[] = [];
+  protected items: T[] = [];
 
   addListener(listenerFunction: Listener<T>) {
     this.listeners.push(listenerFunction);
+  }
+
+  notifyListeners() {
+    this.listeners.forEach((listenerFunction: Listener<T>) => {
+      listenerFunction([...this.items]);
+    });
   }
 }
 
 // Project State Management
 class ProjectState extends State<Project> {
-  private projects: Project[] = [];
   private static instance: ProjectState;
 
   private constructor() {
@@ -54,12 +60,6 @@ class ProjectState extends State<Project> {
     return this.instance;
   }
 
-  private notifyListeners() {
-    this.listeners.forEach((listenerFunction: Listener<Project>) => {
-      listenerFunction([...this.projects]);
-    });
-  }
-
   addProject(title: string, description: string, people: number) {
     const project = new Project(
       Math.random().toString(),
@@ -69,12 +69,12 @@ class ProjectState extends State<Project> {
       ProjectStatus.Active
     );
 
-    this.projects.push(project);
+    this.items.push(project);
     this.notifyListeners();
   }
 
   moveProject(projectId: string, newStatus: ProjectStatus) {
-    const project = this.projects.find(
+    const project = this.items.find(
       (project: Project) => project.id === projectId
     );
     if (!project) return;
