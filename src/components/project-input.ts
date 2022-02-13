@@ -53,10 +53,11 @@ export default class ProjectInput extends Component<
       max: 5,
     };
 
-    const isInvalid =
-      !validate(titleValidatable) ||
-      !validate(descriptionValidatable) ||
-      !validate(peopleValidatable);
+    const isInvalid = !validate({
+      titleValidatable,
+      descriptionValidatable,
+      peopleValidatable,
+    });
 
     if (isInvalid) {
       alert("Invalid input, please try again");
