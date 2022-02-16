@@ -1,10 +1,8 @@
-// Project Type
 export enum ProjectStatus {
   Active = "active",
   Finished = "finished",
 }
 
-// Project Class
 export default class Project {
   constructor(
     public id: string,

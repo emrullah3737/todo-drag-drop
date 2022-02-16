@@ -1,9 +1,9 @@
-import AutoBind from "../decorators/auto-bind.js";
-import { DragTarget } from "../models/drag-drop.js";
-import Project, { ProjectStatus } from "../models/project.js";
-import projectState from "../utils/project-state.js";
-import Component from "./base-component.js";
-import ProjectItem from "./project-item.js";
+import AutoBind from "../decorators/auto-bind";
+import { DragTarget } from "../models/drag-drop";
+import Project, { ProjectStatus } from "../models/project";
+import projectState from "../utils/project-state";
+import Component from "./base-component";
+import ProjectItem from "./project-item";
 
 export default class ProjectList
   extends Component<HTMLDivElement, HTMLElement>
@@ -58,7 +58,7 @@ export default class ProjectList
     if (!event.dataTransfer) return;
 
     const {
-      types: [format, data],
+      types: [format],
     } = event.dataTransfer;
 
     if (format !== "text/plain") return;
